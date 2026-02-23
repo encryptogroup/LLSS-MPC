@@ -1,0 +1,4 @@
+INPUT:1,Scalar,Integer>1,Scalar,Integer < > { Plain:Blinded } | 0
+INPUT:1,Scalar,Integer>1,Scalar,Integer < > { Plain:Blinded } | 1
+*:1,Scalar,Integer>1,Scalar,Integer < Additive:Blinded > { Blinded:Additive } 0 1 | 2
+OUTPUT:1,Scalar,Integer>1,Scalar,Integer < > { Additive:Plain } 2 | 3

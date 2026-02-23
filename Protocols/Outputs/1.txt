@@ -1,0 +1,57 @@
+Executing protocol
+Given circuit: ../BaselineCircuits/FP-ceil.txt
+Batch Size: 10000
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+1 connecting to 0 leading: 0 ip: 172.16.1.11
+Startup
+      Sent: 0
+  received: 0
+Starting Setup Phase
+Finished Setup Phase
+      Sent: 20
+  received: 20
+Starting Online Phase
+Layers: 74
+Finished Online Phase
+      Sent: 892788
+  received: 892788
+     total: 1785576
+Label              Time (ms)  diff (ms)
+__________________________________
+after protocol        6233.4   6233.365  **********
+
+Sampled 650 correlations
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+1 connecting to 0 leading: 0 ip: 172.16.1.11
+Startup
+      Sent: 0
+  received: 0
+Starting Setup Phase
+Finished Setup Phase
+      Sent: 20
+  received: 20
+Starting Online Phase
+Layers: 74
+Finished Online Phase
+      Sent: 892788
+  received: 892788
+     total: 1785576
+Label              Time (ms)  diff (ms)
+__________________________________
+after protocol        6056.7   6056.724  **********
+
+Sampled 650 correlations
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+1 connecting to 0 leading: 0 ip: 172.16.1.11
+Startup
+      Sent: 0
+  received: 0
+Starting Setup Phase
+network send error: Broken pipe
+ at  /home/mstillger/delayed-resharing/thirdparty/libOTe/cryptoTools/cryptoTools/Network/Channel.cpp:870

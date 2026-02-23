@@ -1,0 +1,54 @@
+Executing protocol
+Given circuit: ../BaselineCircuits/FP-ceil.txt
+Batch Size: 10000
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+2 connecting to 0 leading: 1 ip: 172.16.1.13
+Startup
+      Sent: 0
+  received: 0
+Starting Setup Phase
+Finished Setup Phase
+      Sent: 20
+  received: 20
+Starting Online Phase
+Layers: 74
+Finished Online Phase
+      Sent: 812784
+  received: 812784
+     total: 1625568
+Label              Time (ms)  diff (ms)
+__________________________________
+after protocol        6292.2   6292.179  **********
+
+Sampled 650 correlations
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+2 connecting to 0 leading: 1 ip: 172.16.1.13
+Startup
+      Sent: 0
+  received: 0
+Starting Setup Phase
+Finished Setup Phase
+      Sent: 20
+  received: 20
+Starting Online Phase
+Layers: 74
+Finished Online Phase
+      Sent: 812784
+  received: 812784
+     total: 1625568
+Label              Time (ms)  diff (ms)
+__________________________________
+after protocol        6102.8   6102.829  **********
+
+Sampled 650 correlations
+Loading Generalized Term Network from ../BaselineCircuits/FP-ceil.txt
+Ring Size: 2
+Ring Width: 1
+2 connecting to 0 leading: 1 ip: 172.16.1.13
+Startup
+      Sent: 0
+  received: 0

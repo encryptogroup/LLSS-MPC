@@ -1,0 +1,5 @@
+digraph G {
+        n0 [label="v1025",xlabel=""];
+        n1 [label="OUTPUT",xlabel=""];
+n0 -> n1 [label="1"];
+}
