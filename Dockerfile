@@ -14,8 +14,6 @@ RUN apt-get update && \
     clang \
     iproute2 \
     iputils-ping \
-    && \
-    apt-get update
 RUN apt install -y libboost-filesystem-dev libboost-thread-dev libboost-regex-dev libtool
 RUN mkdir delayed-resharing
 WORKDIR /delayed-resharing/
