@@ -13,7 +13,7 @@ Our implementations and needed dependencies can be manually installed or set up 
 First, build our provided Dockerfile:
 
 ```sh
-sudo docker build -t delayed-resharing:1.0 .
+sudo docker build --network=host -t delayed-resharing:1.0 .
 ```
 
 Next, run the container and follow the remaining instructions from inside of the container:
