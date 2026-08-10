@@ -34,8 +34,6 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
             for file in files:
                 print(f"Benchmarking: {file}")
                 circuit_rel_path = f"../{folder}/RSS/{file.name}"
-
-                total_time = 0.0
                 
                 program_name = "./build/DelayedresharingProtocol"
                 ring_size = "1"
@@ -43,42 +41,68 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     program_name = "./build/DelayedresharingProtocolLowBatch"
                     ring_size = "2"
 
-                for _ in range(repetitions):
-                    cmd0 = [
-                        "ip", "netns", "exec", "neon_ns0",
-                        program_name,
-                        circuit_rel_path, "2", "0",
-                        "172.16.1.11", "172.16.1.13", ring_size, "1"
-                    ]
-                    cmd1 = [
-                        "ip", "netns", "exec", "neon_ns1",
-                        program_name,
-                        circuit_rel_path, "2", "1",
-                        "172.16.1.12", "172.16.1.11", ring_size, "1"
-                    ]
-                    cmd2 = [
-                        "ip", "netns", "exec", "neon_ns2",
-                        program_name,
-                        circuit_rel_path, "2", "2",
-                        "172.16.1.13", "172.16.1.12", ring_size, "1"
-                    ]
+                # Regex pattern to extract the runtime value in ms
+                runtime_pattern = re.compile(r"Party 0 Average runtime:\s*([\d.]+)\s*ms")
 
-                    start_time = time.perf_counter()
-                    p0 = subprocess.Popen(cmd0)
+                cmd0 = [
+                    "ip",
+                    "netns",
+                    "exec",
+                    "neon_ns0",
+                    program_name,
+                    circuit_rel_path,
+                    "2",
+                    "0",
+                    "172.16.1.11",
+                    "172.16.1.13",
+                    ring_size,
+                    str(repetitions),
+                ]
+                cmd1 = [
+                    "ip",
+                    "netns",
+                    "exec",
+                    "neon_ns1",
+                    program_name,
+                    circuit_rel_path,
+                    "2",
+                    "1",
+                    "172.16.1.12",
+                    "172.16.1.11",
+                    ring_size,
+                    str(repetitions),
+                ]
+                cmd2 = [
+                    "ip",
+                    "netns",
+                    "exec",
+                    "neon_ns2",
+                    program_name,
+                    circuit_rel_path,
+                    "2",
+                    "2",
+                    "172.16.1.13",
+                    "172.16.1.12",
+                    ring_size,
+                    str(repetitions),
+                ]
 
-                    p1 = subprocess.Popen(cmd1)
-                    p2 = subprocess.Popen(cmd2)
+                p0 = subprocess.Popen(cmd0, stdout=subprocess.PIPE, text=True)
+                p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE, text=True)
+                p2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, text=True)
 
-                    p0.wait()
-                    elapsed = time.perf_counter() - start_time
-                    total_time += elapsed
+                p0_stdout, _ = p0.communicate()
+                p1.communicate()
+                p2.communicate()
 
-                    p1.wait()
-                    p2.wait()
-                    time.sleep(0.1)
+                match = runtime_pattern.search(p0_stdout)
+                avg_time_seconds = float(match.group(1)) / 1000
+                print("In seconds "+str(avg_time_seconds))
+
+                time.sleep(0.1)
 
                 avg_time = total_time / repetitions
-                writer.writerow([circuit_rel_path, network, f"{avg_time:.6f}"])
+                writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
                 csvfile.flush()
 
         subprocess.run(
@@ -90,7 +114,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
 print("===Result===")
 
-results = defaultdict(dict)
+results = {}
 
 with open("runtimes_rss.csv") as f:
     reader = csv.reader(f)
