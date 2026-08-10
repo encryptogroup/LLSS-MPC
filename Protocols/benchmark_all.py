@@ -35,25 +35,32 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                 circuit_rel_path = f"../{folder}/RSS/{file.name}"
 
                 total_time = 0.0
+                
+                program_name = "./build/DelayedresharingProtocol"
+                ring_size = "1"
+                if file.name in ["NN.txt", "mse.txt"]:
+                    program_name = "./build/DelayedresharingProtocolLowBatch"
+                    ring_size = "2"
+
 
                 for _ in range(repetitions):
                     cmd0 = [
                         "ip", "netns", "exec", "neon_ns0",
-                        "./build/DelayedresharingProtocol",
+                        program_name,
                         circuit_rel_path, "2", "0",
-                        "172.16.1.11", "172.16.1.13", "1", "1"
+                        "172.16.1.11", "172.16.1.13", ring_size, "1"
                     ]
                     cmd1 = [
                         "ip", "netns", "exec", "neon_ns1",
-                        "./build/DelayedresharingProtocol",
+                        program_name,
                         circuit_rel_path, "2", "1",
-                        "172.16.1.12", "172.16.1.11", "1", "1"
+                        "172.16.1.12", "172.16.1.11", ring_size, "1"
                     ]
                     cmd2 = [
                         "ip", "netns", "exec", "neon_ns2",
-                        "./build/DelayedresharingProtocol",
+                        program_name,
                         circuit_rel_path, "2", "2",
-                        "172.16.1.13", "172.16.1.12", "1", "1"
+                        "172.16.1.13", "172.16.1.12", ring_size, "1"
                     ]
 
                     start_time = time.perf_counter()
