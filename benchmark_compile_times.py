@@ -25,7 +25,7 @@ def get_circuit_size(baseline_path, original_file):
 
 with open('compiletimes.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow(['filename', 'model', 'circuit_size', 'avg_compile_time_seconds', 'max_peak_memory_kb'])
+    writer.writerow(['filename', 'model', 'circuit_size', 'avg_compile_time_seconds', 'avg_peak_memory_kb'])
     
     for model, folder in zip(models, folders):
         path = Path('Circuits/')
@@ -55,7 +55,7 @@ with open('compiletimes.csv', 'w', newline='') as csvfile:
             
             circuit_size = get_circuit_size(baseline_path, file)
             avg_duration = sum(durations) / len(durations)
-            avg_memory = max(memories)
+            avg_memory = sum(memories) / len(memories)
             
             writer.writerow([file.name, model, circuit_size, f"{avg_duration:.4f}", f"{avg_memory:.0f}"])
             csvfile.flush()
