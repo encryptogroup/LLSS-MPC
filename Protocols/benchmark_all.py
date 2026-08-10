@@ -155,7 +155,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
 print("===Result===")
 
-results = {}
+results = defaultdict(dict)
 
 with open("runtimes_rss.csv") as f:
     reader = csv.reader(f)
