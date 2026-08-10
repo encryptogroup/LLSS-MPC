@@ -8,13 +8,8 @@ import subprocess
 networks = ["WAN", "LAN"]
 folders = ["OptimizedCircuits", "BaselineCircuits"]
 
-if len(sys.argv) < 2:
-    print("Usage: python3 script.py <repetitions>")
-    sys.exit(1)
-
 repetitions = int(sys.argv[1])
-
-# Pathlib one-liner for safe file deletion
+print(f"Repetitions: {repetitions}")
 Path('runtimes_rss.csv').unlink(missing_ok=True)
 
 with open('runtimes_rss.csv', 'w', newline='') as csvfile:
@@ -46,39 +41,35 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                         "ip", "netns", "exec", "neon_ns0",
                         "./build/DelayedresharingProtocol",
                         circuit_rel_path, "2", "0",
-                        "172.16.1.11", "172.16.1.13", "1", "10"
+                        "172.16.1.11", "172.16.1.13", "1", "1"
                     ]
                     cmd1 = [
                         "ip", "netns", "exec", "neon_ns1",
                         "./build/DelayedresharingProtocol",
                         circuit_rel_path, "2", "1",
-                        "172.16.1.12", "172.16.1.11", "1", "10"
+                        "172.16.1.12", "172.16.1.11", "1", "1"
                     ]
                     cmd2 = [
                         "ip", "netns", "exec", "neon_ns2",
                         "./build/DelayedresharingProtocol",
                         circuit_rel_path, "2", "2",
-                        "172.16.1.13", "172.16.1.12", "1", "10"
+                        "172.16.1.13", "172.16.1.12", "1", "1"
                     ]
 
-                    # Start process 0 and measure start time
                     start_time = time.perf_counter()
                     p0 = subprocess.Popen(cmd0)
 
-                    # Start background processes
                     p1 = subprocess.Popen(cmd1)
                     p2 = subprocess.Popen(cmd2)
 
-                    # Wait specifically for process 0 to complete and record time
                     p0.wait()
                     elapsed = time.perf_counter() - start_time
                     total_time += elapsed
 
-                    # Wait for remaining processes to finish cleanup
                     p1.wait()
                     p2.wait()
 
-                avg_time = total_time / repetitions if repetitions > 0 else 0
+                avg_time = total_time / repetitions
                 writer.writerow([file.name, network, f"{avg_time:.6f}"])
                 csvfile.flush()
 
