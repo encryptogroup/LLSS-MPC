@@ -22,7 +22,8 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
         subprocess.run(
             ["python3", "network.py", "start", "3", network],
             text=True,
-            check=True
+            check=True,
+            capture_output=True
         )
 
         for folder in folders:
@@ -109,7 +110,8 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
         subprocess.run(
             ["python3", "network.py", "stop", "3", network],
             text=True,
-            check=True
+            check=True,
+            capture_output=True
         )
         time.sleep(0.1)
 
