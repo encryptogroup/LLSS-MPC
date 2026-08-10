@@ -4,10 +4,11 @@ import time
 from pathlib import Path
 import subprocess
 import re
+import sys
 
 models = ["replicated", "3shamir", "10shamir", "masked", "weak"]
 folders = ["RSS", "Shamir/3", "Shamir/10", "Masked", "Weak"]
-repetitions = 5
+repetitions = int(sys.argv[1])
 
 def get_peak_memory(args):
     cmd = ["/usr/bin/time", "-v"] + args
