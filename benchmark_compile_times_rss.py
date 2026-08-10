@@ -25,6 +25,9 @@ def get_circuit_size(baseline_path, original_file):
         line_count = sum(1 for _ in f)
     return line_count
 
+if os.path.exists('compiletimes_rss.csv'):
+    os.remove('compiletimes_rss.csv')
+
 with open('compiletimes_rss.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['filename', 'model', 'circuit_size', 'avg_compile_time_seconds', 'avg_peak_memory_kb'])

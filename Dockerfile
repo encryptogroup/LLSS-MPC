@@ -13,7 +13,8 @@ RUN apt-get update && \
     automake \
     clang \
     iproute2 \
-    iputils-ping
+    iputils-ping \
+    nano
 RUN apt install -y libboost-filesystem-dev libboost-thread-dev libboost-regex-dev libtool
 RUN mkdir delayed-resharing
 WORKDIR /delayed-resharing/
