@@ -45,4 +45,8 @@ target_link_libraries(protocol delayedresharing oc::libOTe oc::cryptoTools gener
 
 add_executable(DelayedresharingProtocol main_protocol.cpp main_protocol.h)
 
+add_executable(DelayedresharingProtocolLowBatch main_protocol_low_batch.cpp main_protocol.h)
+
 target_link_libraries(DelayedresharingProtocol protocol)
+
+target_link_libraries(DelayedresharingProtocolLowBatch protocol)
