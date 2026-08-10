@@ -62,6 +62,7 @@ with open('compiletimes.csv', 'w', newline='') as csvfile:
             csvfile.flush()
             print(f"Optimized Circuit: {file.name} | Size: {circuit_size} | Time: {avg_duration:.2f}s | Mem: {avg_memory:.0f} KB\n")
 
+print("===Result===")
 with open("compiletimes.csv") as f:
     reader = csv.reader(f)
     for row in reader:

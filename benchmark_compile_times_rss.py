@@ -63,6 +63,8 @@ with open('compiletimes_rss.csv', 'w', newline='') as csvfile:
             csvfile.flush()
             print(f"Optimized Circuit: {file.name} | Size: {circuit_size} | Time: {avg_duration:.2f}s | Mem: {avg_memory:.0f} KB\n")
 
+print("===Result===")
+
 with open("compiletimes_rss.csv") as f:
     reader = csv.reader(f)
     for row in reader:
