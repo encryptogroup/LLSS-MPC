@@ -2,6 +2,7 @@ import csv
 import os
 import sys
 import time
+import re
 from pathlib import Path
 import subprocess
 from collections import defaultdict
@@ -86,6 +87,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     ring_size,
                     str(repetitions),
                 ]
+                
 
                 p0 = subprocess.Popen(cmd0, stdout=subprocess.PIPE, text=True)
                 p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE, text=True)
@@ -101,7 +103,6 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
                 time.sleep(0.1)
 
-                avg_time = total_time / repetitions
                 writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
                 csvfile.flush()
 
