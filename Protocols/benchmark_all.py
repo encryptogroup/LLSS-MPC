@@ -68,6 +68,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
                     p1.wait()
                     p2.wait()
+                    time.sleep(0.1)
 
                 avg_time = total_time / repetitions
                 writer.writerow([circuit_rel_path, network, f"{avg_time:.6f}"])
