@@ -144,4 +144,4 @@ for (network, circuit_filename), times in sorted(results.items()):
     
     speedup = base / opt
     pct_reduction = ((base - opt) / base) * 100
-    print(f"{network:<8} {circuit_filename:<20} {pct_reduction:<15.2f}%")
+    print(f"{network} {circuit_filename} {pct_reduction}%")
