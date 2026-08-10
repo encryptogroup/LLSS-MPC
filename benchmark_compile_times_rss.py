@@ -5,8 +5,8 @@ from pathlib import Path
 import subprocess
 import re
 
-models = ["replicated"]
-folders = ["RSS"]
+models = ["replicated", "3shamir", "10shamir", "masked", "weak"]
+folders = ["RSS", "Shamir/3", "Shamir/10", "Masked", "Weak"]
 repetitions = 5
 
 def get_peak_memory(args):
@@ -23,7 +23,7 @@ def get_circuit_size(baseline_path, original_file):
         line_count = sum(1 for _ in f)
     return line_count
 
-with open('compiletimes_rss.csv', 'w', newline='') as csvfile:
+with open('compiletimes.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['filename', 'model', 'circuit_size', 'avg_compile_time_seconds', 'avg_peak_memory_kb'])
     
@@ -61,7 +61,7 @@ with open('compiletimes_rss.csv', 'w', newline='') as csvfile:
             csvfile.flush()
             print(f"Optimized Circuit: {file.name} | Size: {circuit_size} | Time: {avg_duration:.2f}s | Mem: {avg_memory:.0f} KB\n")
 
-with open("compiletimes_rss.csv") as f:
+with open("compiletimes.csv") as f:
     reader = csv.reader(f)
     for row in reader:
         print(" ".join(row))
