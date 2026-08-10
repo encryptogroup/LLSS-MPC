@@ -14,7 +14,7 @@ Path('runtimes_rss.csv').unlink(missing_ok=True)
 
 with open('runtimes_rss.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow(['circuit', 'network', 'avg_run_time'])
+    writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
 
     for network in networks:
         subprocess.run(
