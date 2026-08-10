@@ -19,6 +19,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
     writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
 
     for network in networks:
+        print("Entering Network Setting: "+str(network))
         subprocess.run(
             ["python3", "network.py", "start", "3", network],
             text=True,
