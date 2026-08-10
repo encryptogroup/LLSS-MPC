@@ -18,5 +18,5 @@ def esimate_circuits(path,baseline):
 				print( f"{((1-upgrades/baselinec[circuit])*100):.3f}%")
 
 
-esimate_circuits("BaselineCircuits/RSS",True)
+esimate_circuits("BaselineCircuits/Weak",True)
 esimate_circuits("OptimizedCircuits/Weak",False)
