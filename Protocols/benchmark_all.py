@@ -70,7 +70,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     p2.wait()
 
                 avg_time = total_time / repetitions
-                writer.writerow([file.name, network, f"{avg_time:.6f}"])
+                writer.writerow([circuit_rel_path, network, f"{avg_time:.6f}"])
                 csvfile.flush()
 
         subprocess.run(
