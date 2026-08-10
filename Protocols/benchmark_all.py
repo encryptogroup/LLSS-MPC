@@ -14,6 +14,13 @@ repetitions = int(sys.argv[1])
 print(f"Repetitions: {repetitions}")
 Path('runtimes_rss.csv').unlink(missing_ok=True)
 
+
+def cleanup_processes():
+    binary_names = ["DelayedresharingProtocol", "DelayedresharingProtocolLowBatch"]
+    for binary in binary_names:
+        subprocess.run(["pkill", "-9", "-f", binary], stderr=subprocess.DEVNULL)
+    time.sleep(0.2)
+
 with open('runtimes_rss.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
@@ -47,6 +54,10 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                 # Regex pattern to extract the runtime value in ms
                 runtime_pattern = re.compile(r"Party 0 Average runtime:\s*([\d.]+)\s*ms")
 
+                repetition_in_command = False
+                command_reps = "1"
+                if repetition_in_command:
+                    command_reps = str(repetitions)
                 cmd0 = [
                     "ip",
                     "netns",
@@ -59,7 +70,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     "172.16.1.11",
                     "172.16.1.13",
                     ring_size,
-                    str(repetitions),
+                    command_reps,
                 ]
                 cmd1 = [
                     "ip",
@@ -73,7 +84,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     "172.16.1.12",
                     "172.16.1.11",
                     ring_size,
-                    str(repetitions),
+                    command_reps,
                 ]
                 cmd2 = [
                     "ip",
@@ -87,23 +98,49 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                     "172.16.1.13",
                     "172.16.1.12",
                     ring_size,
-                    str(repetitions),
+                    command_reps,
                 ]
                 
+                total = 0
+                if repetition_in_command:
+                    cleanup_processes()
+                    p0 = subprocess.Popen(cmd0, stdout=subprocess.PIPE, text=True)
+                    p1 = subprocess.Popen(cmd1, stdout=subprocess.DEVNULL, text=True)
+                    p2 = subprocess.Popen(cmd2, stdout=subprocess.DEVNULL, text=True)
 
-                p0 = subprocess.Popen(cmd0, stdout=subprocess.PIPE, text=True)
-                p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE, text=True)
-                p2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, text=True)
+                    p0_stdout, _ = p0.communicate()
+                    p1.wait()
+                    p2.wait()
+                    match = runtime_pattern.search(p0_stdout)
+                    time_seconds = float(match.group(1)) / 1000
+                    avg_time_seconds = time_seconds
+                else:
+                    total_time = 0
+                    for i in range(repetitions):
+                        cleanup_processes()
+                        p0 = subprocess.Popen(cmd0, stdout=subprocess.PIPE, text=True)
+                        p1 = subprocess.Popen(cmd1, stdout=subprocess.DEVNULL, text=True)
+                        p2 = subprocess.Popen(cmd2, stdout=subprocess.DEVNULL, text=True)
 
-                p0_stdout, _ = p0.communicate()
-                p1.communicate()
-                p2.communicate()
+                        p0_stdout, _ = p0.communicate()
+                        p1.wait()
+                        p2.wait()
+                        match = runtime_pattern.search(p0_stdout)
+                        time_seconds = float(match.group(1)) / 1000
+                        total_time += time_seconds
+                        print("Time of run: "+str(time_seconds))
+                        time.sleep(0.5)
+                    avg_time_seconds = total_time / repetitions
+                    
 
-                match = runtime_pattern.search(p0_stdout)
-                avg_time_seconds = float(match.group(1)) / 1000
-                print("In seconds "+str(avg_time_seconds))
 
-                time.sleep(0.1)
+
+
+
+                print("Average in seconds "+str(avg_time_seconds))
+
+                time.sleep(0.5)
+
 
                 writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
                 csvfile.flush()
