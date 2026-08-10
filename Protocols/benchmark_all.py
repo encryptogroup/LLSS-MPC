@@ -4,6 +4,7 @@ import sys
 import time
 from pathlib import Path
 import subprocess
+from collections import defaultdict
 
 networks = ["WAN", "LAN"]
 folders = ["OptimizedCircuits", "BaselineCircuits"]
@@ -41,7 +42,6 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                 if file.name in ["NN.txt", "mse.txt"]:
                     program_name = "./build/DelayedresharingProtocolLowBatch"
                     ring_size = "2"
-
 
                 for _ in range(repetitions):
                     cmd0 = [
@@ -90,7 +90,34 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
 print("===Result===")
 
+results = defaultdict(dict)
+
 with open("runtimes_rss.csv") as f:
     reader = csv.reader(f)
+    header = next(reader, None)
+    if header:
+        print(" ".join(header))
+        
     for row in reader:
+        if not row:
+            continue
         print(" ".join(row))
+        
+        circuit_path, network, avg_time_str = row
+        circuit_filename = Path(circuit_path).name
+        avg_time = float(avg_time_str)
+        
+        if "BaselineCircuits" in circuit_path:
+            results[(network, circuit_filename)]["baseline"] = avg_time
+        elif "OptimizedCircuits" in circuit_path:
+            results[(network, circuit_filename)]["optimized"] = avg_time
+
+print("=== Improvement Ratios ===")
+
+for (network, circuit_filename), times in sorted(results.items()):
+    base = times.get("baseline")
+    opt = times.get("optimized")
+    
+    speedup = base / opt
+    pct_reduction = ((base - opt) / base) * 100
+    print(f"{network:<8} {circuit_filename:<20} {pct_reduction:<15.2f}%")
