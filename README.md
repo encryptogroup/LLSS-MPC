@@ -173,10 +173,6 @@ This launches three parties locally that run the protocol as within our benchmar
 The ringsize parameter can be set to $1$ for binary computation and $2$ for 64 bit ring elements. The latter is intended for the NN.txt and mse.txt example which are included allready.
 The benchmark results of the execution are written to the ```Protocols/Outputs``` folder with seperate files for each party.
 
-Alternatively, individual parties can be started with
-```sh
-bash launch_p<0/1/2>.sh <circuitfile> <ringsize>
-```
 
 ## Cost calculation for protocols
 
