@@ -146,6 +146,13 @@ Yet, note that run times are subject to the specific machine and may not exactly
 to differences in benchmarking setup.
 In the paper, we always consider the maximum run time among the three parties.
 
+Alternatively, the full suite of protocol executions can be automatically launched by executing the following in the Docker container:
+
+```sh
+cd Protocols/
+python3 benchmark_all.py 10
+```
+
 **Full Description:**
 
 To start or stop network emulation in LAN or WAN, run
