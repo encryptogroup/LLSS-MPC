@@ -21,17 +21,44 @@ def cleanup_processes():
         subprocess.run(["pkill", "-9", "-f", binary], stderr=subprocess.DEVNULL)
     time.sleep(0.5)
 
-with open('runtimes_rss.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
+def cleanup_network(network):
+    try:
+        subprocess.run(
+            ["python3", "network.py", "stop", "3", network],
+            text=True,
+            check=True,
+            capture_output=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Network cleanup failed (exit code {e.returncode}):\n{e.stderr}")
+    except FileNotFoundError:
+        print("Error: 'python3' executable not found.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
-    for network in networks:
-        print("Entering Network Setting: "+str(network))
+def prepare_network(network):
+    try:
         subprocess.run(
             ["python3", "network.py", "start", "3", network],
             text=True,
             check=True
         )
+    except subprocess.CalledProcessError as e:
+        print(f"Network preparation failed with exit code {e.returncode}.")
+    except FileNotFoundError:
+        print("Error: 'python3' executable not found.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+with open('runtimes_rss.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
+
+    for network in networks:
+        cleanup_network()
+        time.sleep(1)
+        print("Entering Network Setting: "+str(network))
+        prepare_network(network)
 
         for folder in folders:
             path = Path('../' + str(folder) + '/RSS')
@@ -144,12 +171,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                 writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
                 csvfile.flush()
 
-        subprocess.run(
-            ["python3", "network.py", "stop", "3", network],
-            text=True,
-            check=True,
-            capture_output=True
-        )
+        cleanup_network()
         time.sleep(1)
 
 print("===Result===")
