@@ -19,7 +19,7 @@ def cleanup_processes():
     binary_names = ["DelayedresharingProtocol", "DelayedresharingProtocolLowBatch"]
     for binary in binary_names:
         subprocess.run(["pkill", "-9", "-f", binary], stderr=subprocess.DEVNULL)
-    time.sleep(0.2)
+    time.sleep(0.5)
 
 with open('runtimes_rss.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
@@ -129,7 +129,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                         time_seconds = float(match.group(1)) / 1000
                         total_time += time_seconds
                         print("Time of run: "+str(time_seconds))
-                        time.sleep(0.5)
+                        time.sleep(1)
                     avg_time_seconds = total_time / repetitions
                     
 
@@ -139,7 +139,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
 
                 print("Average in seconds "+str(avg_time_seconds))
 
-                time.sleep(0.5)
+                time.sleep(1)
 
 
                 writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
@@ -151,7 +151,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
             check=True,
             capture_output=True
         )
-        time.sleep(0.1)
+        time.sleep(1)
 
 print("===Result===")
 
