@@ -21,7 +21,7 @@ def cleanup_processes():
         subprocess.run(["pkill", "-9", "-f", binary], stderr=subprocess.DEVNULL)
     time.sleep(0.5)
 
-def cleanup_network(network):
+def cleanup_network(network, ignore_errors = False):
     try:
         subprocess.run(
             ["python3", "network.py", "stop", "3", network],
@@ -30,11 +30,14 @@ def cleanup_network(network):
             capture_output=True
         )
     except subprocess.CalledProcessError as e:
-        print(f"Network cleanup failed (exit code {e.returncode}):\n{e.stderr}")
+        if not ignore_errors:
+            print(f"Network cleanup failed (exit code {e.returncode}):\n{e.stderr}")
     except FileNotFoundError:
-        print("Error: 'python3' executable not found.")
+        if not ignore_errors:
+            print("Error: 'python3' executable not found.")
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        if not ignore_errors:
+            print(f"An unexpected error occurred: {e}")
 
 def prepare_network(network):
     try:
@@ -54,8 +57,9 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['circuit', 'network', 'avg_run_time_seconds'])
 
+    cleanup_network("WAN",True)
+    cleanup_network("LAN",True)
     for network in networks:
-        cleanup_network()
         time.sleep(1)
         print("Entering Network Setting: "+str(network))
         prepare_network(network)
@@ -171,7 +175,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
                 writer.writerow([circuit_rel_path, network, f"{avg_time_seconds:.6f}"])
                 csvfile.flush()
 
-        cleanup_network()
+        cleanup_network(network)
         time.sleep(1)
 
 print("===Result===")
