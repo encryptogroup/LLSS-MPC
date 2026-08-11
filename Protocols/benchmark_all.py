@@ -30,8 +30,7 @@ with open('runtimes_rss.csv', 'w', newline='') as csvfile:
         subprocess.run(
             ["python3", "network.py", "start", "3", network],
             text=True,
-            check=True,
-            capture_output=True
+            check=True
         )
 
         for folder in folders:
