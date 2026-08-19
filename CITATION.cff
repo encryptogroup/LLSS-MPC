@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use or reference this paper, please cite it as below."
+title: "Additions, Multiplications, and the Interaction In-Between: Optimizing MPC Protocols via Leveled Linear Secret Sharing"
+authors:
+  - family-names: "Brüggemann"
+    given-names: "Andreas"
+  - family-names: "Schneider"
+    given-names: "Thomas"
+  - family-names: "Stillger"
+    given-names: "Maximilian"
+url: "https://ia.cr/2026/368"
+preferred-citation:
+  type: conference-paper
+  authors:
+    - family-names: "Brüggemann"
+      given-names: "Andreas"
+      affiliation: 'Technical University of Darmstadt, Germany'
+      email: brüggemann@encrypto.cs.tu-darmstadt.de
+      orcid: 'https://orcid.org/0000-0002-8102-9328'
+    - family-names: "Schneider"
+      given-names: "Thomas"
+      affiliation: 'Technical University of Darmstadt, Germany'
+      email: schneider@encrypto.cs.tu-darmstadt.de
+      orcid: 'https://orcid.org/0000-0001-8090-1316'
+    - family-names: "Stillger"
+      given-names: "Maximilian"
+      affiliation: 'Technical University of Darmstadt, Germany'
+      email: brüggemann@encrypto.cs.tu-darmstadt.de
+      orcid: 'https://orcid.org/0009-0000-9979-7790'
+  title: "Additions, Multiplications, and the Interaction In-Between: Optimizing MPC Protocols via Leveled Linear Secret Sharing"
+  collection-title: "34th Network and Distributed System Security Symposium (NDSS 2027)"
+  year: 2027
