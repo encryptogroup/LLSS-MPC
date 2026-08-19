@@ -1,13 +1,14 @@
 cff-version: 1.2.0
-message: "If you use or reference this paper, please cite it as below."
+message: >-
+  If you use or reference this paper, please cite it as follows:
+  @inproceedings{BSS27,
+  author = {Andreas Br\"uggemann and Thomas Schneider and Maximilian Stillger},
+  title = {{Additions, Multiplications, and the Interaction In-Between: Optimizing MPC Protocols via Leveled Linear Secret Sharing}},
+  booktitle = {34. Network and Distributed System Security Symposium (NDSS'27)},
+  year = {2027},
+  publisher = {Internet Society}
+  }
 title: "Additions, Multiplications, and the Interaction In-Between: Optimizing MPC Protocols via Leveled Linear Secret Sharing"
-authors:
-  - family-names: "Brüggemann"
-    given-names: "Andreas"
-  - family-names: "Schneider"
-    given-names: "Thomas"
-  - family-names: "Stillger"
-    given-names: "Maximilian"
 url: "https://ia.cr/2026/368"
 preferred-citation:
   type: conference-paper
