@@ -201,6 +201,10 @@ You may overwrite them with newly optimized circuits, or adapt the scripts.
 python3 calculate_cost_replicated.py
 ```
 
+## Comparisons to MAESTRO and ALKAID from the Appendix
+
+Please see [here](./ComparisonMAESTROandALKAID/README.md).
+
 ## Note
 
 All code provided in this repository is research-level code and should not be deployed in a production setting.
