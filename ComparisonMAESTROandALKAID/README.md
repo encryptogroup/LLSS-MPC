@@ -23,6 +23,9 @@ can be found [here](../Circuits/aes_128.bristol) (unoptimized) and
 For comparing PPA performance to ALKAID, we need 64 bit adders. We consider different PPAs and provide
 the circuits here for reproducability.
 
+For all circuits, simply counting the numbers of "AND" in bristol files or "additive:blinded" in our
+format provides the number of AND gates respectively upgrade gates.
+
 ### MOTION Sklansky Adder
 
 Taken from [here](https://github.com/encryptogroup/MOTION/blob/dev/circuits/int/int_add64_depth.bristol),
@@ -48,7 +51,7 @@ The circuit can be compiled as follows:
 ```sh
 python3 genCircuit_SPU.py > circuit_SPU.bristol
 ```
-and is already provided [here](./genCircuit_SPU.py).
+and is already provided [here](./circuit_SPU.bristol).
 
 ### Improved SecretFlow-SPU Kogge-Stone Adder (B)
 
@@ -59,11 +62,19 @@ The circuit can be compiled as follows:
 ```sh
 python3 genCircuit_SPU_improved.py > circuit_SPU_improved.bristol
 ```
-and is already provided [here](./genCircuit_SPU.py).
+and is already provided [here](./circuit_SPU_improved.bristol).
 
 ### Optimized Circuit Variants
 
-To optimize the circuits with our optimizer, please follow the general instructions [here](../README.md).
+To optimize the circuits with our optimizer, use the following commands, which only generates the
+optimized version for inputs and outputs in higher sharings.
+```sh
+../ShareAssigner/build/DelayedResharing int_add64_depth.bristol /dev/null int_add64_depth_optimized.txt weak
+../ShareAssigner/build/DelayedResharing circuit_ABY3.bristol /dev/null circuit_ABY3_optimized.txt weak
+../ShareAssigner/build/DelayedResharing circuit_SPU.bristol /dev/null circuit_SPU_optimized.txt weak
+../ShareAssigner/build/DelayedResharing circuit_SPU_improved.bristol /dev/null circuit_SPU_improved_optimized.txt weak
+```
+We already provide the outputs in this directory, using the suffix "_optimized.txt".
 
 ### Licenses
 

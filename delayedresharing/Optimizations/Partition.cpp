@@ -163,7 +163,7 @@ delayedresharing::GeneralizedTermNetwork* delayedresharing::Partition::applyFres
             operationOutputVariable = new delayedresharing::Variable();
             operationOutputVariable->input = newInput;
             operationOutputVariable->valueType = newInput->valueType;
-            operationOutputVariable->variableName = std::__cxx11::to_string(variableCounter);
+            operationOutputVariable->variableName = std::to_string(variableCounter);
             freshVariables[newInput] = operationOutputVariable;
             variableCounter++;
           }else

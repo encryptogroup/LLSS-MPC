@@ -279,39 +279,39 @@ print()
 # MOTION's Sklansky Adder (https://github.com/encryptogroup/MOTION/blob/dev/circuits/int/int_add64_depth.stats):
 MOTION_PPA64_CIRC_ANDS = 383
 MOTION_PPA64_CIRC_DEPTH = 6
-OPT_MOTION_PPA64_CIRC_ANDS = 249
+OPT_MOTION_PPA64_CIRC_UPGRADES = 249
 OPT_MOTION_PPA64_CIRC_DEPTH = 6
 # cryptoTools Sklansky Adder (https://github.com/ladnir/cryptoTools/blob/1a344ee4b7f4afaf39193eb413300ba17962b19e/cryptoTools/Circuit/BetaLibrary.cpp#L865)
 #   as used by ABY3 (e.g., https://github.com/ladnir/aby3/blob/e52b1d441b9456ffe1315862f22edb8280d42efd/aby3/Circuit/CircuitLibrary.cpp#L260):
 CRYPTOTOOLS_PPA64_CIRC_ANDS = 373
 CRYPTOTOOLS_PPA64_CIRC_DEPTH = 7
-OPT_CRYPTOTOOLS_PPA64_CIRC_ANDS = 243
+OPT_CRYPTOTOOLS_PPA64_CIRC_UPGRADES = 243
 OPT_CRYPTOTOOLS_PPA64_CIRC_DEPTH = 7
 # "packed" Kogge-Stone adder (radix 2) from SecretFlow SPU (https://github.com/secretflow/spu/blob/4d470a2340846d84902c08c176f83c309fc579fb/src/libspu/mpc/ab_api.cc#L314)
 #   used by default (https://github.com/secretflow/spu/blob/4d470a2340846d84902c08c176f83c309fc579fb/src/libspu/mpc/ab_api.cc#L438):
 # ("packed" means that each PPA layer contains 64 operations, including operations on zeros for what is not needed, apparently used for good 64bit alignment)
 SPU_PPA64_CIRC_ANDS = 832
 SPU_PPA64_CIRC_DEPTH = 7
-OPT_SPU_PPA64_CIRC_ANDS = 704
+OPT_SPU_PPA64_CIRC_UPGRADES = 704
 OPT_SPU_PPA64_CIRC_DEPTH = 7
 # "Improved" Kogge-Stone adder (radix 2), as above, but removing all useless gates (0 AND 0, x XOR 0, and the "MSB
 # column" as the overflow is discarded anyway):
 IMPR_SPU_PPA64_CIRC_ANDS = 631
 IMPR_SPU_PPA64_CIRC_DEPTH = 6
-OPT_IMPR_SPU_PPA64_CIRC_ANDS = 569
+OPT_IMPR_SPU_PPA64_CIRC_UPGRADES = 569
 OPT_IMPR_SPU_PPA64_CIRC_DEPTH = 6
 
 print(f"Protocol                                 | offline comm. | online comm. | total comm. | online rounds")
 print(f"RSS (PPA64 MOTION Sklansky)              |           --- | {MOTION_PPA64_CIRC_ANDS * 3:>12} | {MOTION_PPA64_CIRC_ANDS * 3:>11} | {MOTION_PPA64_CIRC_DEPTH:>13}")
-print(f"Leveled RSS (PPA64 MOTION Sklansky)      |           --- | {OPT_MOTION_PPA64_CIRC_ANDS * 3:>12} | {OPT_MOTION_PPA64_CIRC_ANDS * 3:>11} | {OPT_MOTION_PPA64_CIRC_DEPTH:>13}")
+print(f"Leveled RSS (PPA64 MOTION Sklansky)      |           --- | {OPT_MOTION_PPA64_CIRC_UPGRADES * 3:>12} | {OPT_MOTION_PPA64_CIRC_UPGRADES * 3:>11} | {OPT_MOTION_PPA64_CIRC_DEPTH:>13}")
 r, off, on = alkaid(64)
 print(f"ALKAID (custom PPA64)                    | {off:13.0f} | {on:12.0f} | {off+on:11.0f} | {r:>13}")
 print(f"RSS (PPA64 cryptoTools Sklansky)         |           --- | {CRYPTOTOOLS_PPA64_CIRC_ANDS * 3:>12} | {CRYPTOTOOLS_PPA64_CIRC_ANDS * 3:>11} | {CRYPTOTOOLS_PPA64_CIRC_DEPTH:>13}")
-print(f"Leveled RSS (PPA64 cryptoTools Sklansky) |           --- | {OPT_CRYPTOTOOLS_PPA64_CIRC_ANDS * 3:>12} | {OPT_CRYPTOTOOLS_PPA64_CIRC_ANDS * 3:>11} | {OPT_CRYPTOTOOLS_PPA64_CIRC_DEPTH:>13}")
+print(f"Leveled RSS (PPA64 cryptoTools Sklansky) |           --- | {OPT_CRYPTOTOOLS_PPA64_CIRC_UPGRADES * 3:>12} | {OPT_CRYPTOTOOLS_PPA64_CIRC_UPGRADES * 3:>11} | {OPT_CRYPTOTOOLS_PPA64_CIRC_DEPTH:>13}")
 print(f"RSS (PPA64 SPU Kogge-Stone)              |           --- | {SPU_PPA64_CIRC_ANDS * 3:>12} | {SPU_PPA64_CIRC_ANDS * 3:>11} | {SPU_PPA64_CIRC_DEPTH:>13}")
-print(f"Leveled RSS (PPA64 SPU Kogge-Stone)      |           --- | {OPT_SPU_PPA64_CIRC_ANDS * 3:>12} | {OPT_SPU_PPA64_CIRC_ANDS * 3:>11} | {OPT_SPU_PPA64_CIRC_DEPTH:>13}")
+print(f"Leveled RSS (PPA64 SPU Kogge-Stone)      |           --- | {OPT_SPU_PPA64_CIRC_UPGRADES * 3:>12} | {OPT_SPU_PPA64_CIRC_UPGRADES * 3:>11} | {OPT_SPU_PPA64_CIRC_DEPTH:>13}")
 print(f"RSS (PPA64 Improved Kogge-Stone)         |           --- | {IMPR_SPU_PPA64_CIRC_ANDS * 3:>12} | {IMPR_SPU_PPA64_CIRC_ANDS * 3:>11} | {IMPR_SPU_PPA64_CIRC_DEPTH:>13}")
-print(f"Leveled RSS (PPA64 Improved Kogge-Stone) |           --- | {OPT_IMPR_SPU_PPA64_CIRC_ANDS * 3:>12} | {OPT_IMPR_SPU_PPA64_CIRC_ANDS * 3:>11} | {OPT_IMPR_SPU_PPA64_CIRC_DEPTH:>13}")
+print(f"Leveled RSS (PPA64 Improved Kogge-Stone) |           --- | {OPT_IMPR_SPU_PPA64_CIRC_UPGRADES * 3:>12} | {OPT_IMPR_SPU_PPA64_CIRC_UPGRADES * 3:>11} | {OPT_IMPR_SPU_PPA64_CIRC_DEPTH:>13}")
 
 # Benchmark numbers from https://eprint.iacr.org/2025/2298.pdf Table IV
 # Using values for batchsize 1000 for better packing to be closer to theoretical communication.
