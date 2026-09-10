@@ -12,7 +12,7 @@ repetitions = int(sys.argv[1])
 
 
 def get_peak_memory(args):
-    cmd = ["/usr/bin/time", "-v"] + args
+    cmd = ["time", "-v"] + args
     result = subprocess.run(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 
     match = re.search(r"Maximum resident set size \(kbytes\): (\d+)", result.stderr)
