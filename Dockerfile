@@ -8,6 +8,7 @@ RUN apt-get update && \
     build-essential \
     cmake \
     git \
+    time \
     libtool \
     autoconf \
     automake \
