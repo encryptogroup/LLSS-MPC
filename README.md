@@ -144,7 +144,8 @@ python3 network.py stop 3 LAN
 Observe from the run times for baseline and optimized extended circuits how the optimized version should be faster.
 Yet, note that run times are subject to the specific machine and may not exactly match those reported in the paper due
 to differences in benchmarking setup.
-In the paper, we always consider the maximum run time among the three parties.
+In the paper, we always consider the maximum run time among the three parties. This corresponds to the run time of Party 0,
+as it is always the party dealing all the inputs and receiving all the outputs, therefore finishing last.
 
 Alternatively, the full suite of protocol executions can be automatically launched by executing the following in the Docker container:
 
